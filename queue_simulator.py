@@ -3,6 +3,7 @@
 import random
 import math
 import sys
+import numpy
 
 def simulate(lam, mu, n, T):
 	t = 0
@@ -12,8 +13,8 @@ def simulate(lam, mu, n, T):
 	if (n != 0):
 		Xt = n
 	while(True):
-		U1 = random.random() #arrival time
-		U2 = random.random() #departure time
+		U1 = random.random()
+		U2 = random.random()
 		ta = t + (-1/lam)*math.log(U1)
 		td = t + (-1/mu)*math.log(U2)
 		if ((ta > td) and (Xt >= 0)):
@@ -21,16 +22,16 @@ def simulate(lam, mu, n, T):
 				return final_array
 			else:
 				N=N+1
-				t=td
 				Xt=Xt-1
+				t=td
 				final_array.append((t, -1))
 		else:
 			if ta > T:
 				return final_array
 			else:
 				N=N+1
-				t=ta
 				Xt=Xt+1
+				t=ta
 				final_array.append((t, +1))
 
 def main():
@@ -43,7 +44,7 @@ def main():
 	n=int(sys.argv[3])
 	T=int(sys.argv[4])
 	xt_array=[]
-	for i in range(0,999):
+	for i in range(0,100000):
 		sum = 0
 		final_array = simulate(lam,mu,n,T)
 		for item in final_array:
